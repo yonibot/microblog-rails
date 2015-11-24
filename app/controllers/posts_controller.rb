@@ -19,5 +19,11 @@ class PostsController < AuthController
     end
   end
 
+  private
+
+  def post_params
+    params.require(:post).permit(:title, :content, :published, :token)
+  end
+
 
 end
