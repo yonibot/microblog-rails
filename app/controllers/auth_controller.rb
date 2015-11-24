@@ -8,6 +8,8 @@ class AuthController < ApplicationController
     end
   end
 
+  protected
+
   def authenticate_from_token
     user = User.where(token: request['AUTH-TOKEN'])
     if user

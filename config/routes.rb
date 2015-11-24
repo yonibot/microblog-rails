@@ -1,4 +1,11 @@
 Rails.application.routes.draw do
+
+  resources :users, only: [:create]
+
+  resources :posts, only: [:index, :create, :update]
+
+  post 'login' => 'auth#login'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
