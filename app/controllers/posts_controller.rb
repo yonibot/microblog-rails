@@ -20,6 +20,15 @@ class PostsController < AuthController
     end
   end
 
+  def posts
+    if current_user
+      render json: {posts: current_user.posts}
+    else
+      # Render posts belonging to ?username=....you
+
+    end
+  end
+
   private
 
   def post_params

@@ -8,6 +8,15 @@ class AuthController < ApplicationController
     end
   end
 
+  def logout
+    if current_user
+      current_user.update(token: SecureRandom.uuid)
+      render json: {status: "User logged out."}
+    else
+      render json: {error: "No logged in user"}
+    end
+  end
+
   def current_user
     User.where(token: request.headers['AUTH-TOKEN']).first
   end
@@ -15,8 +24,7 @@ class AuthController < ApplicationController
   protected
 
   def authenticate_from_token
-    user = User.where(token: request.headers['AUTH-TOKEN']).first
-    if !user
+    if !current_user
       render json: {error: "Unauthorized."}, status: 401
     end
   end
