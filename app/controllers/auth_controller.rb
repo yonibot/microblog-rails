@@ -1,10 +1,10 @@
 class AuthController < ApplicationController
 
   def login
-    user = User.where(email: params[:user][:email])
+    user = User.where(email: params[:user][:email]).first
     if user && user.authenticate(params[:user][:password])
       response.headers["AUTH-TOKEN"] = user.token
-      render json: {user: user}
+      render json: {user: user.attributes.except('password_digest', 'id'}
     end
   end
 
