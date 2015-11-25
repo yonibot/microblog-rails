@@ -8,16 +8,17 @@ class AuthController < ApplicationController
     end
   end
 
+  def current_user
+    User.where(token: request.headers['AUTH-TOKEN']).first
+  end
+
   protected
 
   def authenticate_from_token
-    user = User.where(token: request['AUTH-TOKEN'])
-    if user
-      @current_user = user
-    else
+    user = User.where(token: request.headers['AUTH-TOKEN']).first
+    if !user
       render json: {error: "Unauthorized."}, status: 401
     end
   end
-
 
 end

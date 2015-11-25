@@ -2,7 +2,8 @@ class PostsController < AuthController
   before_action :authenticate_from_token, only: [:create, :update]
 
   def create
-    post = Post.new(title: post_params[:title], content: post_params[:content])
+    post = Post.new(post_params)
+    post.user = current_user
     if post.save
       render json: {post: post}
     else

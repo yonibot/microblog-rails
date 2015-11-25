@@ -1,13 +1,12 @@
 class Post < ActiveRecord::Base
   belongs_to :user
-  validates :title, :content, :published, :token, presence: true
-  before_validation :set_token, on: :create
+  validates :title, :content, :token, :user_id, presence: true
+  before_validation :set_token
 
   private
 
   def set_token
-    unless self.token
-      self.token = SecureRandom.uuid
-    end
+    self.token ||= SecureRandom.uuid
   end
+
 end
